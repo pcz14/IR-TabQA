@@ -1,5 +1,7 @@
 # UR-TabQA: Toward Verifiable Uncertainty Reduction in Industrial Table Question Answering
 
+[Paper appendix and supplementary figures](anonymous-supplement/README.md)
+
 ## Overview
 
 We introduce **UR-TabQA**, a large-scale bilingual benchmark designed to advance table question answering (TableQA) research under real-world industrial settings. Unlike prior benchmarks built on Wikipedia tables or narrow domains, UR-TabQA frames industrial TableQA as an **uncertainty reduction** process: progressively narrowing the candidate answer space through multi-table grounding, column selection, row filtering, table operations, and answer generation.
