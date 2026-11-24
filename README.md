@@ -1,16 +1,39 @@
-# UR-TabQA: Toward Verifiable Uncertainty Reduction in Industrial Table Question Answering
+# IR-TabQA: Toward Verifiable Uncertainty Reduction in Industrial Table Question Answering
 
-[Paper appendix and supplementary figures](anonymous-supplement/README.md)
+## Appendix
+
+- [A. Training and Evaluation Details](anonymous-supplement/appendix/a-training-and-evaluation.md)
+- [B. Implementation Details for Benchmark Construction](anonymous-supplement/appendix/b-benchmark-construction/README.md)
+  - [B.1. Data Source of IR-TabQA](anonymous-supplement/appendix/b-benchmark-construction/01-data-sources.md)
+  - [B.2. Details of Table and Question Difficulty Classification Criteria](anonymous-supplement/appendix/b-benchmark-construction/02-difficulty-classification.md)
+  - [B.3. Details for Annotation Team Composition](anonymous-supplement/appendix/b-benchmark-construction/03-annotation-team.md)
+  - [B.4. Prompts Library and Seed Questions for Question Generation](anonymous-supplement/appendix/b-benchmark-construction/04-question-generation-prompts.md)
+  - [B.5. Details of Procedure for Question Annotation](anonymous-supplement/appendix/b-benchmark-construction/05-question-annotation.md)
+  - [B.6. Prompt for Answer Generation](anonymous-supplement/appendix/b-benchmark-construction/06-answer-generation-prompt.md)
+  - [B.7. Details of Procedure for Answer Annotation](anonymous-supplement/appendix/b-benchmark-construction/07-answer-annotation.md)
+  - [B.8. Details of Procedure for Gold Evidence Annotation](anonymous-supplement/appendix/b-benchmark-construction/08-gold-evidence-annotation.md)
+  - [B.9. Six LLMs in Reasoning Process](anonymous-supplement/appendix/b-benchmark-construction/09-reasoning-models.md)
+  - [B.10. Step Definitions in TableQA Reasoning](anonymous-supplement/appendix/b-benchmark-construction/10-reasoning-step-definitions.md)
+  - [B.11. Details of Procedure for Reasoning Process Annotation](anonymous-supplement/appendix/b-benchmark-construction/11-reasoning-process-annotation.md)
+  - [B.12. Details of Transformation Prompt](anonymous-supplement/appendix/b-benchmark-construction/12-reasoning-transformation-prompt.md)
+  - [B.13. Details of Data Statistics](anonymous-supplement/appendix/b-benchmark-construction/13-data-statistics.md)
+- [C. Implementation Details for Experiments](anonymous-supplement/appendix/c-experiments/README.md)
+  - [C.1. Unified Prompt Template for Table Reasoning](anonymous-supplement/appendix/c-experiments/01-unified-reasoning-prompt.md)
+  - [C.2. Example of $E_{k}$ Extraction and Calculation across Reasoning Steps](anonymous-supplement/appendix/c-experiments/02-evidence-extraction-and-calculation.md)
+  - [C.3. Language-wise Performance](anonymous-supplement/appendix/c-experiments/03-language-wise-performance.md)
+  - [C.4. URLs of Closed-source Models](anonymous-supplement/appendix/c-experiments/04-closed-source-model-urls.md)
+  - [C.5. Analysis of Detailed Case Study](anonymous-supplement/appendix/c-experiments/05-case-study-analysis.md)
+- [D. Details for payment and GPU hours](anonymous-supplement/appendix/d-payment-and-gpu-hours.md)
 
 ## Overview
 
-We introduce **UR-TabQA**, a large-scale bilingual benchmark designed to advance table question answering (TableQA) research under real-world industrial settings. Unlike prior benchmarks built on Wikipedia tables or narrow domains, UR-TabQA frames industrial TableQA as an **uncertainty reduction** process: progressively narrowing the candidate answer space through multi-table grounding, column selection, row filtering, table operations, and answer generation.
+We introduce **IR-TabQA**, a large-scale bilingual benchmark designed to advance table question answering (TableQA) research under real-world industrial settings. Unlike prior benchmarks built on Wikipedia tables or narrow domains, IR-TabQA frames industrial TableQA as an **uncertainty reduction** process: progressively narrowing the candidate answer space through multi-table grounding, column selection, row filtering, table operations, and answer generation.
 
-UR-TabQA contains **1,932 tables** (1,101 Chinese + 831 English) spanning **30 industrial sub-domains** across 7 primary domains, covering four critical table types: single tables, multiple tables, complex structured tables (hierarchical/nested headers), and extremely large-scale tables. Beyond final answers, the benchmark provides **multi-step dual-mode reasoning annotations** and **executable Python code**, making the uncertainty-reduction process fully observable and verifiable.
+IR-TabQA contains **1,932 tables** (1,101 Chinese + 831 English) spanning **30 industrial sub-domains** across 7 primary domains, covering four critical table types: single tables, multiple tables, complex structured tables (hierarchical/nested headers), and extremely large-scale tables. Beyond final answers, the benchmark provides **multi-step dual-mode reasoning annotations** and **executable Python code**, making the uncertainty-reduction process fully observable and verifiable.
 
-We evaluate **24 competitive baseline models** on UR-TabQA. Experimental results show that even the top-performing closed-source model, GPT-5.4, achieves only **73.45%** overall accuracy, underscoring the substantial challenge posed by real-world industrial TableQA.
+We evaluate **24 competitive baseline models** on IR-TabQA. Experimental results show that even the top-performing closed-source model, GPT-5.4, achieves only **73.45%** overall accuracy, underscoring the substantial challenge posed by real-world industrial TableQA.
 
-> ⚠️ **Important Notice on Data Availability:** The data currently released in this repository constitutes **only a partial subset** of the complete UR-TabQA benchmark. The full dataset — including all 1,932 tables, 5,523 question-answer pairs, and both SFT datasets — will be released in its entirety upon paper acceptance. **Please do not draw conclusions about the full benchmark scale or coverage based solely on the data currently available here.**
+> ⚠️ **Important Notice on Data Availability:** The data currently released in this repository constitutes **only a partial subset** of the complete IR-TabQA benchmark. The full dataset — including all 1,932 tables, 5,523 question-answer pairs, and both SFT datasets — will be released in its entirety upon paper acceptance. **Please do not draw conclusions about the full benchmark scale or coverage based solely on the data currently available here.**
 
 ---
 
@@ -24,13 +47,13 @@ TabEIRL combines two complementary training signals:
 
 **2. Progressive Solving Reward (PSR).** A piecewise outcome reward evaluates code extraction, executability, and answer correctness. Additionally, an inter-group CodeBLEU-based similarity reward guides executable-but-incorrect code toward structurally and semantically correct implementations, providing a meaningful optimization signal before final correctness is achieved.
 
-The combined reward jointly optimizes uncertainty-reduction reasoning quality and answer correctness. Applied to Qwen3-8B, TabEIRL surpasses all 19 open-source baselines and several larger models, achieving **68.07%** on UR-TabQA — the best result among open-source models — while also generalizing robustly to four external TableQA benchmarks (WTQ, AITQA, MiMoTable, HiTab).
+The combined reward jointly optimizes uncertainty-reduction reasoning quality and answer correctness. Applied to Qwen3-8B, TabEIRL surpasses all 19 open-source baselines and several larger models, achieving **68.07%** on IR-TabQA — the best result among open-source models — while also generalizing robustly to four external TableQA benchmarks (WTQ, AITQA, MiMoTable, HiTab).
 
 ---
 
 ## Dataset & Parameter Preview
 
-> ⚠️ **Partial Release Notice:** The data provided in this repository is a **representative preview subset** of the full UR-TabQA benchmark. The complete dataset, comprising all 1,932 tables and 5,523 annotated samples across all 30 industrial sub-domains, will only be available upon paper acceptance. The statistics below describe the **full benchmark** as reported in the paper, not the current partial release.
+> ⚠️ **Partial Release Notice:** The data provided in this repository is a **representative preview subset** of the full IR-TabQA benchmark. The complete dataset, comprising all 1,932 tables and 5,523 annotated samples across all 30 industrial sub-domains, will only be available upon paper acceptance. The statistics below describe the **full benchmark** as reported in the paper, not the current partial release.
 
 The dataset is organized in the `data` directory, split into `zh` (Chinese) and `en` (English) subdirectories. Key statistics of the **complete benchmark** are summarized below:
 
@@ -60,4 +83,4 @@ The `tabeirl_trainer.yaml` file provides key parameter configurations for the RL
 
 ## Data & Code Availability
 
-The complete UR-TabQA dataset and full codebase will be made publicly available upon acceptance of our paper. We are committed to supporting fully reproducible research and will release the entire benchmark, all annotations, and the complete TabEIRL training and evaluation pipeline following the review process.
+The complete IR-TabQA dataset and full codebase will be made publicly available upon acceptance of our paper. We are committed to supporting fully reproducible research and will release the entire benchmark, all annotations, and the complete TabEIRL training and evaluation pipeline following the review process.
