@@ -1,4 +1,4 @@
-# IR-TabQA: Toward Verifiable Uncertainty Reduction in Industrial Table Question Answering
+# IR-TabQA: Toward Verifiable Information Refinement in Industrial Table Question Answering
 
 ## Appendix
 
